@@ -1,0 +1,41 @@
+PSeq.    Program  ::= Program ";" Program1 ;
+PIf.     Program1 ::= "if" Condition "then" Program1 "else" Program1 ;
+PAssign. Program1 ::= Variable ":=" Exp ;
+PWhile.  Program1 ::= "while" Condition "do" Program1 ;
+
+coercions Program 1;
+
+COr.            Condition  ::= Condition "or" Condition1   ;
+CAnd.           Condition1 ::= Condition1 "and" Condition2 ;
+CNot.           Condition2 ::= "not" Condition3            ;
+
+CEquals.        Condition3 ::= Exp "="  Exp ;
+CLessThan.      Condition3 ::= Exp "<"  Exp ;
+CBiggerThan.    Condition3 ::= Exp ">"  Exp ;
+CLessOrEqual.   Condition3 ::= Exp "<=" Exp ;
+CBiggerOrEqual. Condition3 ::= Exp ">=" Exp ;
+
+coercions Condition 3 ;
+
+EAdd.  Exp  ::= Exp  "+" Exp1 ;
+ESub.  Exp  ::= Exp  "-" Exp1 ;
+
+EMul.  Exp1 ::= Exp1 "*" Exp2 ;
+EDiv.  Exp1 ::= Exp1 "/" Exp2 ;
+
+EFact. Exp2 ::= Exp3 "!" ;
+ 
+EInt.  Exp3 ::= Integer  ;
+EVar.  Exp3 ::= Variable ;
+   
+coercions Exp 3 ;
+
+Variable. Variable ::= Ident ;
+
+
+VMProg. Command ::= Command Command ;
+
+VMAssignment. Command ::= Label ":" Variable ":=" Exp "goto" Label ";" ;
+VMBranching.  Command ::= Label ":" "if" Condition "then" Label "else" Label ";" ;
+
+VMLabel.      Label   ::= Integer ;
