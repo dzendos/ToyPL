@@ -1,7 +1,7 @@
 start  := 1;
 finish := 101;
 step   := 2;
-state  := (finish - state) * step;
+state  := (finish - start) * step;
 
 if state > 0 then
 (
