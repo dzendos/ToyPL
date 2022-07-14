@@ -6,7 +6,7 @@ import ToyPL.Abs
 transProgram :: Program -> (Integer, [Command])
 transProgram x = transProgramToVM x 0
 
--- | Recursive translation of program into sequence of commands witn labels.
+-- | Recursive translation of program into sequence of commands with labels.
 transProgramToVM :: Program -> Integer -> (Integer, [Command])
 transProgramToVM x label =
   case x of
@@ -34,7 +34,7 @@ transProgramToVM x label =
             where 
               whileCommands = (take ((length commands) - 1) commands) ++ [VMAssignment label1 variable exp (VMLabel label)]
 
--- | transs variavle by given identifier into string.
+-- | transs variable by given identifier into string.
 transVariable :: Variable -> String
 transVariable x = case x of
   Variable ident -> transIdent ident
