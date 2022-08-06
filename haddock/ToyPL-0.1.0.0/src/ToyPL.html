@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">ToyPL</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-2"></span><span>
+</span><span id="line-3"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="ToyPL.Abs.html"><span class="hs-identifier">ToyPL.Abs</span></a></span><span>
+</span><span id="line-4"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="ToyPL.Par.html"><span class="hs-identifier">ToyPL.Par</span></a></span><span>
+</span><span id="line-5"></span><span>
+</span><span id="line-6"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="ToyPL.Eval.html"><span class="hs-identifier">ToyPL.Eval</span></a></span><span>
+</span><span id="line-7"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="ToyPL.Trans.html"><span class="hs-identifier">ToyPL.Trans</span></a></span><span>
+</span><span id="line-8"></span><span>
+</span><span id="line-9"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="ToyPL.ErrM.html"><span class="hs-identifier">ToyPL.ErrM</span></a></span><span>
+</span><span id="line-10"></span><span>
+</span><span id="line-11"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.Maybe</span></span><span>
+</span><span id="line-12"></span><span>
+</span><span id="line-13"></span><span class="annot"><a href="ToyPL.html#getCommand"><span class="hs-identifier hs-type">getCommand</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="ToyPL.Abs.html#ProgramState"><span class="hs-identifier hs-type">ProgramState</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="ToyPL.Abs.html#Command"><span class="hs-identifier hs-type">Command</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><a href="ToyPL.Abs.html#Command"><span class="hs-identifier hs-type">Command</span></a></span><span>
+</span><span id="line-14"></span><span id="getCommand"><span class="annot"><span class="annottext">getCommand :: ProgramState -&gt; [Command] -&gt; Maybe Command
+</span><a href="ToyPL.html#getCommand"><span class="hs-identifier hs-var hs-var">getCommand</span></a></span></span><span> </span><span id="local-6989586621679048475"><span class="annot"><span class="annottext">ProgramState
+</span><a href="#local-6989586621679048475"><span class="hs-identifier hs-var">state</span></a></span></span><span> </span><span id="local-6989586621679048474"><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048474"><span class="hs-identifier hs-var">commands</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Command] -&gt; Maybe Command
+forall a. [a] -&gt; Maybe a
+</span><span class="hs-identifier hs-var">listToMaybe</span></span><span> </span><span class="annot"><span class="annottext">([Command] -&gt; Maybe Command) -&gt; [Command] -&gt; Maybe Command
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Int -&gt; [Command] -&gt; [Command]
+forall a. Int -&gt; [a] -&gt; [a]
+</span><span class="hs-identifier hs-var">drop</span></span><span> </span><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679048471"><span class="hs-identifier hs-var">n</span></a></span><span> </span><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048474"><span class="hs-identifier hs-var">commands</span></a></span><span>
+</span><span id="line-15"></span><span>    </span><span class="hs-keyword">where</span><span>
+</span><span id="line-16"></span><span>        </span><span id="local-6989586621679048471"><span class="annot"><span class="annottext">n :: Int
+</span><a href="#local-6989586621679048471"><span class="hs-identifier hs-var hs-var">n</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Integer -&gt; Int
+forall a b. (Integral a, Num b) =&gt; a -&gt; b
+</span><span class="hs-identifier hs-var">fromIntegral</span></span><span> </span><span class="annot"><span class="annottext">(Integer -&gt; Int) -&gt; Integer -&gt; Int
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">ProgramState -&gt; Integer
+</span><a href="ToyPL.Abs.html#execPosition"><span class="hs-identifier hs-var hs-var">execPosition</span></a></span><span> </span><span class="annot"><span class="annottext">ProgramState
+</span><a href="#local-6989586621679048475"><span class="hs-identifier hs-var">state</span></a></span><span>
+</span><span id="line-17"></span><span>
+</span><span id="line-18"></span><span class="hs-comment">-- | Processes given command.</span><span>
+</span><span id="line-19"></span><span class="annot"><a href="ToyPL.html#processCommands"><span class="hs-identifier hs-type">processCommands</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="ToyPL.Abs.html#ProgramState"><span class="hs-identifier hs-type">ProgramState</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="ToyPL.Abs.html#Command"><span class="hs-identifier hs-type">Command</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="ToyPL.Abs.html#ProgramState"><span class="hs-identifier hs-type">ProgramState</span></a></span><span>
+</span><span id="line-20"></span><span id="processCommands"><span class="annot"><span class="annottext">processCommands :: String -&gt; ProgramState -&gt; [Command] -&gt; ProgramState
+</span><a href="ToyPL.html#processCommands"><span class="hs-identifier hs-var hs-var">processCommands</span></a></span></span><span> </span><span id="local-6989586621679048464"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679048464"><span class="hs-identifier hs-var">userCommand</span></a></span></span><span> </span><span id="local-6989586621679048463"><span class="annot"><span class="annottext">ProgramState
+</span><a href="#local-6989586621679048463"><span class="hs-identifier hs-var">state</span></a></span></span><span> </span><span id="local-6989586621679048462"><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048462"><span class="hs-identifier hs-var">commands</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-21"></span><span>    </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">ProgramState -&gt; [Command] -&gt; Maybe Command
+</span><a href="ToyPL.html#getCommand"><span class="hs-identifier hs-var">getCommand</span></a></span><span> </span><span class="annot"><span class="annottext">ProgramState
+</span><a href="#local-6989586621679048463"><span class="hs-identifier hs-var">state</span></a></span><span> </span><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048462"><span class="hs-identifier hs-var">commands</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-22"></span><span>        </span><span class="annot"><span class="annottext">Maybe Command
+</span><span class="hs-identifier hs-var">Nothing</span></span><span>  </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">ProgramState
+</span><a href="#local-6989586621679048463"><span class="hs-identifier hs-var">state</span></a></span><span>
+</span><span id="line-23"></span><span>        </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679048461"><span class="annot"><span class="annottext">Command
+</span><a href="#local-6989586621679048461"><span class="hs-identifier hs-var">cmd</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
+</span><span id="line-24"></span><span>            </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679048464"><span class="hs-identifier hs-var">userCommand</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-25"></span><span>                </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;exit&quot;</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">ProgramState
+</span><a href="#local-6989586621679048463"><span class="hs-identifier hs-var">state</span></a></span><span> </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">execCode :: Integer
+</span><a href="ToyPL.Abs.html#execCode"><span class="hs-identifier hs-var">execCode</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Integer
+</span><span class="hs-number">2</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">exitMessage :: String
+</span><a href="ToyPL.Abs.html#exitMessage"><span class="hs-identifier hs-var">exitMessage</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;Execution has terminated by the user.&quot;</span></span><span> </span><span class="hs-special">}</span><span>
+</span><span id="line-26"></span><span>                </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;step&quot;</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">ProgramState
+</span><a href="#local-6989586621679048458"><span class="hs-identifier hs-var">state'</span></a></span><span>
+</span><span id="line-27"></span><span>                </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;run&quot;</span></span><span>  </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">String -&gt; ProgramState -&gt; [Command] -&gt; ProgramState
+</span><a href="ToyPL.html#processCommands"><span class="hs-identifier hs-var">processCommands</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679048464"><span class="hs-identifier hs-var">userCommand</span></a></span><span> </span><span class="annot"><span class="annottext">ProgramState
+</span><a href="#local-6989586621679048458"><span class="hs-identifier hs-var">state'</span></a></span><span> </span><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048462"><span class="hs-identifier hs-var">commands</span></a></span><span>
+</span><span id="line-28"></span><span>                </span><span class="annot"><span class="annottext">String
+</span><span class="hs-identifier">_</span></span><span>      </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">ProgramState
+</span><a href="#local-6989586621679048463"><span class="hs-identifier hs-var">state</span></a></span><span>
+</span><span id="line-29"></span><span>
+</span><span id="line-30"></span><span>            </span><span class="hs-keyword">where</span><span>
+</span><span id="line-31"></span><span>                </span><span id="local-6989586621679048458"><span class="annot"><span class="annottext">state' :: ProgramState
+</span><a href="#local-6989586621679048458"><span class="hs-identifier hs-var hs-var">state'</span></a></span></span><span>   </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ProgramState -&gt; Command -&gt; ProgramState
+</span><a href="ToyPL.Eval.html#evalCommand"><span class="hs-identifier hs-var">evalCommand</span></a></span><span>  </span><span class="annot"><span class="annottext">ProgramState
+</span><a href="#local-6989586621679048463"><span class="hs-identifier hs-var">state</span></a></span><span> </span><span class="annot"><span class="annottext">Command
+</span><a href="#local-6989586621679048461"><span class="hs-identifier hs-var">cmd</span></a></span><span>
+</span><span id="line-32"></span><span>                </span><span class="hs-comment">-- position = execPosition state</span><span>
+</span><span id="line-33"></span><span>
+</span><span id="line-34"></span><span class="hs-comment">-- | Gets command from the User and processes it.</span><span>
+</span><span id="line-35"></span><span class="annot"><a href="ToyPL.html#programRunner"><span class="hs-identifier hs-type">programRunner</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="ToyPL.Abs.html#ProgramState"><span class="hs-identifier hs-type">ProgramState</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="ToyPL.Abs.html#Command"><span class="hs-identifier hs-type">Command</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-36"></span><span id="programRunner"><span class="annot"><span class="annottext">programRunner :: ProgramState -&gt; [Command] -&gt; IO ()
+</span><a href="ToyPL.html#programRunner"><span class="hs-identifier hs-var hs-var">programRunner</span></a></span></span><span> </span><span id="local-6989586621679048455"><span class="annot"><span class="annottext">ProgramState
+</span><a href="#local-6989586621679048455"><span class="hs-identifier hs-var">state</span></a></span></span><span> </span><span id="local-6989586621679048454"><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048454"><span class="hs-identifier hs-var">commands</span></a></span></span><span>
+</span><span id="line-37"></span><span>    </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">ProgramState -&gt; Integer
+</span><a href="ToyPL.Abs.html#execCode"><span class="hs-identifier hs-var hs-var">execCode</span></a></span><span> </span><span class="annot"><span class="annottext">ProgramState
+</span><a href="#local-6989586621679048455"><span class="hs-identifier hs-var">state</span></a></span><span> </span><span class="annot"><span class="annottext">Integer -&gt; Integer -&gt; Bool
+forall a. Eq a =&gt; a -&gt; a -&gt; Bool
+</span><span class="hs-operator hs-var">/=</span></span><span> </span><span class="annot"><span class="annottext">Integer
+</span><span class="hs-number">0</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; IO ()
+</span><span class="hs-identifier hs-var">putStrLn</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; IO ()) -&gt; String -&gt; IO ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">ProgramState -&gt; String
+</span><a href="ToyPL.Abs.html#exitMessage"><span class="hs-identifier hs-var hs-var">exitMessage</span></a></span><span> </span><span class="annot"><span class="annottext">ProgramState
+</span><a href="#local-6989586621679048455"><span class="hs-identifier hs-var">state</span></a></span><span>
+</span><span id="line-38"></span><span>    </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">Bool
+</span><span class="hs-identifier hs-var">otherwise</span></span><span>           </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-39"></span><span>        </span><span class="annot"><span class="annottext">String -&gt; IO ()
+</span><span class="hs-identifier hs-var">putStrLn</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; IO ()) -&gt; String -&gt; IO ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Maybe Command -&gt; String
+forall {a}. Show a =&gt; Maybe a -&gt; String
+</span><a href="#local-6989586621679048451"><span class="hs-identifier hs-var">showCmd</span></a></span><span> </span><span class="annot"><span class="annottext">(Maybe Command -&gt; String) -&gt; Maybe Command -&gt; String
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">ProgramState -&gt; [Command] -&gt; Maybe Command
+</span><a href="ToyPL.html#getCommand"><span class="hs-identifier hs-var">getCommand</span></a></span><span> </span><span class="annot"><span class="annottext">ProgramState
+</span><a href="#local-6989586621679048455"><span class="hs-identifier hs-var">state</span></a></span><span> </span><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048454"><span class="hs-identifier hs-var">commands</span></a></span><span>
+</span><span id="line-40"></span><span>        </span><span id="local-6989586621679048450"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679048450"><span class="hs-identifier hs-var">userCommand</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO String
+</span><span class="hs-identifier hs-var">getLine</span></span><span>
+</span><span id="line-41"></span><span>        </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679048448"><span class="annot"><span class="annottext">state' :: ProgramState
+</span><a href="#local-6989586621679048448"><span class="hs-identifier hs-var hs-var">state'</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; ProgramState -&gt; [Command] -&gt; ProgramState
+</span><a href="ToyPL.html#processCommands"><span class="hs-identifier hs-var">processCommands</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679048450"><span class="hs-identifier hs-var">userCommand</span></a></span><span> </span><span class="annot"><span class="annottext">ProgramState
+</span><a href="#local-6989586621679048455"><span class="hs-identifier hs-var">state</span></a></span><span> </span><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048454"><span class="hs-identifier hs-var">commands</span></a></span><span>
+</span><span id="line-42"></span><span>        </span><span class="annot"><span class="annottext">String -&gt; IO ()
+</span><span class="hs-identifier hs-var">putStrLn</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ProgramState -&gt; String
+forall a. Show a =&gt; a -&gt; String
+</span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">ProgramState
+</span><a href="#local-6989586621679048448"><span class="hs-identifier hs-var">state'</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-43"></span><span>        </span><span class="annot"><span class="annottext">ProgramState -&gt; [Command] -&gt; IO ()
+</span><a href="ToyPL.html#programRunner"><span class="hs-identifier hs-var">programRunner</span></a></span><span> </span><span class="annot"><span class="annottext">ProgramState
+</span><a href="#local-6989586621679048448"><span class="hs-identifier hs-var">state'</span></a></span><span> </span><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048454"><span class="hs-identifier hs-var">commands</span></a></span><span>
+</span><span id="line-44"></span><span>
+</span><span id="line-45"></span><span>        </span><span class="hs-keyword">where</span><span>
+</span><span id="line-46"></span><span>            </span><span class="hs-comment">-- position = execPosition state</span><span>
+</span><span id="line-47"></span><span>            </span><span id="local-6989586621679048451"><span class="annot"><span class="annottext">showCmd :: Maybe a -&gt; String
+</span><a href="#local-6989586621679048451"><span class="hs-identifier hs-var hs-var">showCmd</span></a></span></span><span> </span><span class="annot"><span class="annottext">Maybe a
+</span><span class="hs-identifier hs-var">Nothing</span></span><span>  </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;Nothing&quot;</span></span><span>
+</span><span id="line-48"></span><span>            </span><span class="annot"><a href="#local-6989586621679048451"><span class="hs-identifier hs-var">showCmd</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679048444"><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679048444"><span class="hs-identifier hs-var">a</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">a -&gt; String
+forall a. Show a =&gt; a -&gt; String
+</span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679048444"><span class="hs-identifier hs-var">a</span></a></span><span>
+</span><span id="line-49"></span><span>
+</span><span id="line-50"></span><span class="annot"><a href="ToyPL.html#translateInput"><span class="hs-identifier hs-type">translateInput</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">]</span><span>
+</span><span id="line-51"></span><span id="translateInput"><span class="annot"><span class="annottext">translateInput :: String -&gt; Either String [String]
+</span><a href="ToyPL.html#translateInput"><span class="hs-identifier hs-var hs-var">translateInput</span></a></span></span><span> </span><span id="local-6989586621679048442"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679048442"><span class="hs-identifier hs-var">input</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-52"></span><span>  </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">Program -&gt; (Integer, [Command])
+</span><a href="ToyPL.Trans.html#transProgram"><span class="hs-identifier hs-var">transProgram</span></a></span><span> </span><span class="annot"><span class="annottext">(Program -&gt; (Integer, [Command]))
+-&gt; Either String Program -&gt; Either String (Integer, [Command])
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">[Token] -&gt; Either String Program
+</span><a href="ToyPL.Par.html#pProgram"><span class="hs-identifier hs-var">pProgram</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; [Token]
+</span><a href="ToyPL.Par.html#myLexer"><span class="hs-identifier hs-var">myLexer</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679048442"><span class="hs-identifier hs-var">input</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-53"></span><span>    </span><span class="annot"><span class="hs-identifier hs-type">Left</span></span><span> </span><span id="local-6989586621679048437"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679048437"><span class="hs-identifier hs-var">err</span></a></span></span><span>            </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">String -&gt; Either String [String]
+forall a b. a -&gt; Either a b
+</span><span class="hs-identifier hs-var">Left</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679048437"><span class="hs-identifier hs-var">err</span></a></span><span>
+</span><span id="line-54"></span><span>    </span><span class="annot"><span class="hs-identifier hs-type">Right</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer
+</span><span class="hs-identifier">_</span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679048436"><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048436"><span class="hs-identifier hs-var">commands</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">[String] -&gt; Either String [String]
+forall a b. b -&gt; Either a b
+</span><span class="hs-identifier hs-var">Right</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">[Command] -&gt; [String]
+</span><a href="ToyPL.html#commandsToStrings"><span class="hs-identifier hs-var">commandsToStrings</span></a></span><span> </span><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048436"><span class="hs-identifier hs-var">commands</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-55"></span><span>
+</span><span id="line-56"></span><span class="annot"><a href="ToyPL.html#runWithInput"><span class="hs-identifier hs-type">runWithInput</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span>  </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-57"></span><span id="runWithInput"><span class="annot"><span class="annottext">runWithInput :: String -&gt; IO ()
+</span><a href="ToyPL.html#runWithInput"><span class="hs-identifier hs-var hs-var">runWithInput</span></a></span></span><span> </span><span id="local-6989586621679048433"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679048433"><span class="hs-identifier hs-var">input</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-58"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679048432"><span class="annot"><span class="annottext">commands :: [Command]
+</span><a href="#local-6989586621679048432"><span class="hs-identifier hs-var hs-var">commands</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Integer, [Command]) -&gt; [Command]
+forall a b. (a, b) -&gt; b
+</span><span class="hs-identifier hs-var">snd</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; (Integer, [Command])
+</span><a href="ToyPL.html#tplProgram"><span class="hs-identifier hs-var">tplProgram</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679048433"><span class="hs-identifier hs-var">input</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-59"></span><span>
+</span><span id="line-60"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; IO ()
+</span><span class="hs-identifier hs-var">putStrLn</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; IO ()) -&gt; String -&gt; IO ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; String
+forall (t :: * -&gt; *) a. Foldable t =&gt; t [a] -&gt; [a]
+</span><span class="hs-identifier hs-var">concat</span></span><span> </span><span class="annot"><span class="annottext">([String] -&gt; String) -&gt; [String] -&gt; String
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[Command] -&gt; [String]
+</span><a href="ToyPL.html#commandsToStrings"><span class="hs-identifier hs-var">commandsToStrings</span></a></span><span> </span><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048432"><span class="hs-identifier hs-var">commands</span></a></span><span>
+</span><span id="line-61"></span><span>
+</span><span id="line-62"></span><span>    </span><span class="annot"><span class="annottext">ProgramState -&gt; [Command] -&gt; IO ()
+</span><a href="ToyPL.html#programRunner"><span class="hs-identifier hs-var">programRunner</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ProgramState
+</span><a href="#local-6989586621679048429"><span class="hs-identifier hs-var">initState</span></a></span><span> </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">finishLabel :: Integer
+</span><a href="ToyPL.Abs.html#finishLabel"><span class="hs-identifier hs-var">finishLabel</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Int -&gt; Integer
+forall a. Integral a =&gt; a -&gt; Integer
+</span><span class="hs-identifier hs-var">toInteger</span></span><span> </span><span class="annot"><span class="annottext">(Int -&gt; Integer) -&gt; Int -&gt; Integer
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[Command] -&gt; Int
+forall (t :: * -&gt; *) a. Foldable t =&gt; t a -&gt; Int
+</span><span class="hs-identifier hs-var">length</span></span><span> </span><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048432"><span class="hs-identifier hs-var">commands</span></a></span><span> </span><span class="hs-special">}</span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048432"><span class="hs-identifier hs-var">commands</span></a></span><span>
+</span><span id="line-63"></span><span>
+</span><span id="line-64"></span><span>        </span><span class="hs-keyword">where</span><span>
+</span><span id="line-65"></span><span>            </span><span id="local-6989586621679048429"><span class="annot"><span class="annottext">initState :: ProgramState
+</span><a href="#local-6989586621679048429"><span class="hs-identifier hs-var hs-var">initState</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ProgramState :: Integer
+-&gt; Integer
+-&gt; Integer
+-&gt; String
+-&gt; [(Variable, Integer)]
+-&gt; ProgramState
+</span><a href="ToyPL.Abs.html#ProgramState"><span class="hs-identifier hs-type">ProgramState</span></a></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-66"></span><span>                </span><span class="annot"><span class="annottext">finishLabel :: Integer
+</span><a href="ToyPL.Abs.html#finishLabel"><span class="hs-identifier hs-var">finishLabel</span></a></span><span>  </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Integer
+</span><span class="hs-number">0</span></span><span class="hs-special">,</span><span>
+</span><span id="line-67"></span><span>                </span><span class="annot"><span class="annottext">execPosition :: Integer
+</span><a href="ToyPL.Abs.html#execPosition"><span class="hs-identifier hs-var">execPosition</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Integer
+</span><span class="hs-number">0</span></span><span class="hs-special">,</span><span>
+</span><span id="line-68"></span><span>                </span><span class="annot"><span class="annottext">execCode :: Integer
+</span><a href="ToyPL.Abs.html#execCode"><span class="hs-identifier hs-var">execCode</span></a></span><span>     </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Integer
+</span><span class="hs-number">0</span></span><span class="hs-special">,</span><span>
+</span><span id="line-69"></span><span>                </span><span class="annot"><span class="annottext">exitMessage :: String
+</span><a href="ToyPL.Abs.html#exitMessage"><span class="hs-identifier hs-var">exitMessage</span></a></span><span>  </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;&quot;</span></span><span class="hs-special">,</span><span>
+</span><span id="line-70"></span><span>                </span><span class="annot"><span class="annottext">variables :: [(Variable, Integer)]
+</span><a href="ToyPL.Abs.html#variables"><span class="hs-identifier hs-var">variables</span></a></span><span>    </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span>
+</span><span id="line-71"></span><span>            </span><span class="hs-special">}</span><span>
+</span><span id="line-72"></span><span>
+</span><span id="line-73"></span><span>
+</span><span id="line-74"></span><span class="hs-comment">-- | Runs the compiler.</span><span>
+</span><span id="line-75"></span><span class="annot"><a href="ToyPL.html#run"><span class="hs-identifier hs-type">run</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-76"></span><span id="run"><span class="annot"><span class="annottext">run :: IO ()
+</span><a href="ToyPL.html#run"><span class="hs-identifier hs-var hs-var">run</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-77"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; IO ()
+</span><span class="hs-identifier hs-var">putStrLn</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;Enter path to source file: &quot;</span></span><span>
+</span><span id="line-78"></span><span>    </span><span id="local-6989586621679048423"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679048423"><span class="hs-identifier hs-var">sourcePath</span></a></span></span><span>  </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO String
+</span><span class="hs-identifier hs-var">getLine</span></span><span>
+</span><span id="line-79"></span><span>    </span><span id="local-6989586621679048422"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679048422"><span class="hs-identifier hs-var">fileContent</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">String -&gt; IO String
+</span><span class="hs-identifier hs-var">readFile</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679048423"><span class="hs-identifier hs-var">sourcePath</span></a></span><span>
+</span><span id="line-80"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; IO ()
+</span><a href="ToyPL.html#runWithInput"><span class="hs-identifier hs-var">runWithInput</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679048422"><span class="hs-identifier hs-var">fileContent</span></a></span><span>
+</span><span id="line-81"></span><span>
+</span><span id="line-82"></span><span class="hs-comment">-- | Tries to translate given program s.</span><span>
+</span><span id="line-83"></span><span class="annot"><a href="ToyPL.html#tplProgram"><span class="hs-identifier hs-type">tplProgram</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Integer</span></span><span class="hs-special">,</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="ToyPL.Abs.html#Command"><span class="hs-identifier hs-type">Command</span></a></span><span class="hs-special">]</span><span class="hs-special">)</span><span>
+</span><span id="line-84"></span><span id="tplProgram"><span class="annot"><span class="annottext">tplProgram :: String -&gt; (Integer, [Command])
+</span><a href="ToyPL.html#tplProgram"><span class="hs-identifier hs-var hs-var">tplProgram</span></a></span></span><span> </span><span id="local-6989586621679048420"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679048420"><span class="hs-identifier hs-var">s</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-85"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span class="annot"><a href="ToyPL.ErrM.html#Ok"><span class="hs-identifier hs-type">Ok</span></a></span><span> </span><span id="local-6989586621679048418"><span class="annot"><span class="annottext">Program
+</span><a href="#local-6989586621679048418"><span class="hs-identifier hs-var">e</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Token] -&gt; Either String Program
+</span><a href="ToyPL.Par.html#pProgram"><span class="hs-identifier hs-var">pProgram</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; [Token]
+</span><a href="ToyPL.Par.html#myLexer"><span class="hs-identifier hs-var">myLexer</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679048420"><span class="hs-identifier hs-var">s</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-86"></span><span>    </span><span class="hs-keyword">in</span><span> </span><span class="annot"><span class="annottext">Program -&gt; (Integer, [Command])
+</span><a href="ToyPL.Trans.html#transProgram"><span class="hs-identifier hs-var">transProgram</span></a></span><span> </span><span class="annot"><span class="annottext">Program
+</span><a href="#local-6989586621679048418"><span class="hs-identifier hs-var">e</span></a></span><span>
+</span><span id="line-87"></span><span>
+</span><span id="line-88"></span><span class="hs-comment">-- | Returns a list of commands that can be printed on the screen.</span><span>
+</span><span id="line-89"></span><span class="annot"><a href="ToyPL.html#commandsToStrings"><span class="hs-identifier hs-type">commandsToStrings</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="ToyPL.Abs.html#Command"><span class="hs-identifier hs-type">Command</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">]</span><span>
+</span><span id="line-90"></span><span id="commandsToStrings"><span class="annot"><span class="annottext">commandsToStrings :: [Command] -&gt; [String]
+</span><a href="ToyPL.html#commandsToStrings"><span class="hs-identifier hs-var hs-var">commandsToStrings</span></a></span></span><span> </span><span id="local-6989586621679048417"><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048417"><span class="hs-identifier hs-var">commands</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Command -&gt; String) -&gt; [Command] -&gt; [String]
+forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
+</span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">\</span><span id="local-6989586621679048416"><span class="annot"><span class="annottext">Command
+</span><a href="#local-6989586621679048416"><span class="hs-identifier hs-var">c</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Command -&gt; String
+forall a. Show a =&gt; a -&gt; String
+</span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">Command
+</span><a href="#local-6989586621679048416"><span class="hs-identifier hs-var">c</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;\n&quot;</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048417"><span class="hs-identifier hs-var">commands</span></a></span><span>
+</span><span id="line-91"></span></pre></body></html>

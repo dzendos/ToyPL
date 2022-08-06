@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">ToyPL.Trans</span><span> </span><span class="hs-keyword">where</span><span> </span><span>
+</span><span id="line-2"></span><span>
+</span><span id="line-3"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="ToyPL.Abs.html"><span class="hs-identifier">ToyPL.Abs</span></a></span><span>
+</span><span id="line-4"></span><span>
+</span><span id="line-5"></span><span class="hs-comment">-- | transs given program into sequens of commands.</span><span>
+</span><span id="line-6"></span><span class="annot"><a href="ToyPL.Trans.html#transProgram"><span class="hs-identifier hs-type">transProgram</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="ToyPL.Abs.html#Program"><span class="hs-identifier hs-type">Program</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Integer</span></span><span class="hs-special">,</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="ToyPL.Abs.html#Command"><span class="hs-identifier hs-type">Command</span></a></span><span class="hs-special">]</span><span class="hs-special">)</span><span>
+</span><span id="line-7"></span><span id="transProgram"><span class="annot"><span class="annottext">transProgram :: Program -&gt; (Integer, [Command])
+</span><a href="ToyPL.Trans.html#transProgram"><span class="hs-identifier hs-var hs-var">transProgram</span></a></span></span><span> </span><span id="local-6989586621679048191"><span class="annot"><span class="annottext">Program
+</span><a href="#local-6989586621679048191"><span class="hs-identifier hs-var">x</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Program -&gt; Integer -&gt; (Integer, [Command])
+</span><a href="ToyPL.Trans.html#transProgramToVM"><span class="hs-identifier hs-var">transProgramToVM</span></a></span><span> </span><span class="annot"><span class="annottext">Program
+</span><a href="#local-6989586621679048191"><span class="hs-identifier hs-var">x</span></a></span><span> </span><span class="annot"><span class="annottext">Integer
+</span><span class="hs-number">0</span></span><span>
+</span><span id="line-8"></span><span>
+</span><span id="line-9"></span><span class="hs-comment">-- | Recursive translation of program into sequence of commands with labels.</span><span>
+</span><span id="line-10"></span><span class="annot"><a href="ToyPL.Trans.html#transProgramToVM"><span class="hs-identifier hs-type">transProgramToVM</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="ToyPL.Abs.html#Program"><span class="hs-identifier hs-type">Program</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Integer</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Integer</span></span><span class="hs-special">,</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="ToyPL.Abs.html#Command"><span class="hs-identifier hs-type">Command</span></a></span><span class="hs-special">]</span><span class="hs-special">)</span><span>
+</span><span id="line-11"></span><span id="transProgramToVM"><span class="annot"><span class="annottext">transProgramToVM :: Program -&gt; Integer -&gt; (Integer, [Command])
+</span><a href="ToyPL.Trans.html#transProgramToVM"><span class="hs-identifier hs-var hs-var">transProgramToVM</span></a></span></span><span> </span><span id="local-6989586621679048189"><span class="annot"><span class="annottext">Program
+</span><a href="#local-6989586621679048189"><span class="hs-identifier hs-var">x</span></a></span></span><span> </span><span id="local-6989586621679048188"><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048188"><span class="hs-keyword hs-var">label</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-12"></span><span>  </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">Program
+</span><a href="#local-6989586621679048189"><span class="hs-identifier hs-var">x</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-13"></span><span>    </span><span class="annot"><a href="ToyPL.Abs.html#PSeq"><span class="hs-identifier hs-type">PSeq</span></a></span><span> </span><span id="local-6989586621679048186"><span class="annot"><span class="annottext">Program
+</span><a href="#local-6989586621679048186"><span class="hs-identifier hs-var">program1</span></a></span></span><span> </span><span id="local-6989586621679048185"><span class="annot"><span class="annottext">Program
+</span><a href="#local-6989586621679048185"><span class="hs-identifier hs-var">program2</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048184"><span class="hs-identifier hs-var">finishLabel2</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048183"><span class="hs-identifier hs-var">commands1</span></a></span><span> </span><span class="annot"><span class="annottext">[Command] -&gt; [Command] -&gt; [Command]
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048182"><span class="hs-identifier hs-var">commands2</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-14"></span><span>      </span><span class="hs-keyword">where</span><span>
+</span><span id="line-15"></span><span>        </span><span class="hs-special">(</span><span id="local-6989586621679048181"><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048181"><span class="hs-identifier hs-var">finishLabel1</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679048183"><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048183"><span class="hs-identifier hs-var">commands1</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Program -&gt; Integer -&gt; (Integer, [Command])
+</span><a href="ToyPL.Trans.html#transProgramToVM"><span class="hs-identifier hs-var">transProgramToVM</span></a></span><span> </span><span class="annot"><span class="annottext">Program
+</span><a href="#local-6989586621679048186"><span class="hs-identifier hs-var">program1</span></a></span><span> </span><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048188"><span class="hs-keyword hs-var">label</span></a></span><span>
+</span><span id="line-16"></span><span>        </span><span class="hs-special">(</span><span id="local-6989586621679048184"><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048184"><span class="hs-identifier hs-var">finishLabel2</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679048182"><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048182"><span class="hs-identifier hs-var">commands2</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Program -&gt; Integer -&gt; (Integer, [Command])
+</span><a href="ToyPL.Trans.html#transProgramToVM"><span class="hs-identifier hs-var">transProgramToVM</span></a></span><span> </span><span class="annot"><span class="annottext">Program
+</span><a href="#local-6989586621679048185"><span class="hs-identifier hs-var">program2</span></a></span><span> </span><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048181"><span class="hs-identifier hs-var">finishLabel1</span></a></span><span>
+</span><span id="line-17"></span><span>
+</span><span id="line-18"></span><span>    </span><span class="annot"><a href="ToyPL.Abs.html#PAssign"><span class="hs-identifier hs-type">PAssign</span></a></span><span> </span><span id="local-6989586621679048179"><span class="annot"><span class="annottext">Variable
+</span><a href="#local-6989586621679048179"><span class="hs-identifier hs-var">variable</span></a></span></span><span> </span><span id="local-6989586621679048178"><span class="annot"><span class="annottext">Exp
+</span><a href="#local-6989586621679048178"><span class="hs-identifier hs-var">exp</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">(</span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048188"><span class="hs-keyword hs-var">label</span></a></span><span> </span><span class="annot"><span class="annottext">Integer -&gt; Integer -&gt; Integer
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">+</span></span><span> </span><span class="annot"><span class="annottext">Integer
+</span><span class="hs-number">1</span></span><span class="hs-special">)</span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048176"><span class="hs-identifier hs-var">assignCmd</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-19"></span><span>      </span><span class="hs-keyword">where</span><span>
+</span><span id="line-20"></span><span>        </span><span id="local-6989586621679048176"><span class="annot"><span class="annottext">assignCmd :: [Command]
+</span><a href="#local-6989586621679048176"><span class="hs-identifier hs-var hs-var">assignCmd</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Label -&gt; Variable -&gt; Exp -&gt; Label -&gt; Command
+</span><a href="ToyPL.Abs.html#VMAssignment"><span class="hs-identifier hs-var">VMAssignment</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer -&gt; Label
+</span><a href="ToyPL.Abs.html#VMLabel"><span class="hs-identifier hs-var">VMLabel</span></a></span><span> </span><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048188"><span class="hs-keyword hs-var">label</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Variable
+</span><a href="#local-6989586621679048179"><span class="hs-identifier hs-var">variable</span></a></span><span> </span><span class="annot"><span class="annottext">Exp
+</span><a href="#local-6989586621679048178"><span class="hs-identifier hs-var">exp</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer -&gt; Label
+</span><a href="ToyPL.Abs.html#VMLabel"><span class="hs-identifier hs-var">VMLabel</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048188"><span class="hs-keyword hs-var">label</span></a></span><span> </span><span class="annot"><span class="annottext">Integer -&gt; Integer -&gt; Integer
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">+</span></span><span> </span><span class="annot"><span class="annottext">Integer
+</span><span class="hs-number">1</span></span><span class="hs-special">)</span><span class="hs-special">)</span><span class="hs-special">]</span><span>
+</span><span id="line-21"></span><span>
+</span><span id="line-22"></span><span>    </span><span class="annot"><a href="ToyPL.Abs.html#PIf"><span class="hs-identifier hs-type">PIf</span></a></span><span> </span><span id="local-6989586621679048170"><span class="annot"><span class="annottext">Condition
+</span><a href="#local-6989586621679048170"><span class="hs-identifier hs-var">condition</span></a></span></span><span> </span><span id="local-6989586621679048169"><span class="annot"><span class="annottext">Program
+</span><a href="#local-6989586621679048169"><span class="hs-identifier hs-var">program1</span></a></span></span><span> </span><span id="local-6989586621679048168"><span class="annot"><span class="annottext">Program
+</span><a href="#local-6989586621679048168"><span class="hs-identifier hs-var">program2</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048167"><span class="hs-identifier hs-var">finishLabel</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048166"><span class="hs-identifier hs-var">branchingCmd</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-23"></span><span>      </span><span class="hs-keyword">where</span><span> </span><span>
+</span><span id="line-24"></span><span>        </span><span class="hs-special">(</span><span id="local-6989586621679048163"><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048163"><span class="hs-identifier hs-var">elseLabel</span></a></span></span><span class="hs-special">,</span><span>   </span><span id="local-6989586621679048162"><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048162"><span class="hs-identifier hs-var">commands1</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Program -&gt; Integer -&gt; (Integer, [Command])
+</span><a href="ToyPL.Trans.html#transProgramToVM"><span class="hs-identifier hs-var">transProgramToVM</span></a></span><span> </span><span class="annot"><span class="annottext">Program
+</span><a href="#local-6989586621679048169"><span class="hs-identifier hs-var">program1</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048188"><span class="hs-keyword hs-var">label</span></a></span><span> </span><span class="annot"><span class="annottext">Integer -&gt; Integer -&gt; Integer
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">+</span></span><span> </span><span class="annot"><span class="annottext">Integer
+</span><span class="hs-number">1</span></span><span class="hs-special">)</span><span>
+</span><span id="line-25"></span><span>        </span><span class="hs-special">(</span><span id="local-6989586621679048167"><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048167"><span class="hs-identifier hs-var">finishLabel</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679048161"><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048161"><span class="hs-identifier hs-var">commands2</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Program -&gt; Integer -&gt; (Integer, [Command])
+</span><a href="ToyPL.Trans.html#transProgramToVM"><span class="hs-identifier hs-var">transProgramToVM</span></a></span><span> </span><span class="annot"><span class="annottext">Program
+</span><a href="#local-6989586621679048168"><span class="hs-identifier hs-var">program2</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048163"><span class="hs-identifier hs-var">elseLabel</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-26"></span><span>        </span><span id="local-6989586621679048166"><span class="annot"><span class="annottext">branchingCmd :: [Command]
+</span><a href="#local-6989586621679048166"><span class="hs-identifier hs-var hs-var">branchingCmd</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Label -&gt; Condition -&gt; Label -&gt; Label -&gt; Command
+</span><a href="ToyPL.Abs.html#VMBranching"><span class="hs-identifier hs-var">VMBranching</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer -&gt; Label
+</span><a href="ToyPL.Abs.html#VMLabel"><span class="hs-identifier hs-var">VMLabel</span></a></span><span> </span><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048188"><span class="hs-keyword hs-var">label</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Condition
+</span><a href="#local-6989586621679048170"><span class="hs-identifier hs-var">condition</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer -&gt; Label
+</span><a href="ToyPL.Abs.html#VMLabel"><span class="hs-identifier hs-var">VMLabel</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048188"><span class="hs-keyword hs-var">label</span></a></span><span> </span><span class="annot"><span class="annottext">Integer -&gt; Integer -&gt; Integer
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">+</span></span><span> </span><span class="annot"><span class="annottext">Integer
+</span><span class="hs-number">1</span></span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer -&gt; Label
+</span><a href="ToyPL.Abs.html#VMLabel"><span class="hs-identifier hs-var">VMLabel</span></a></span><span> </span><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048163"><span class="hs-identifier hs-var">elseLabel</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Command -&gt; [Command] -&gt; [Command]
+forall a. a -&gt; [a] -&gt; [a]
+</span><span class="hs-glyph hs-var">:</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048162"><span class="hs-identifier hs-var">commands1</span></a></span><span> </span><span class="annot"><span class="annottext">[Command] -&gt; [Command] -&gt; [Command]
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048161"><span class="hs-identifier hs-var">commands2</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-27"></span><span>        </span><span>
+</span><span id="line-28"></span><span>    </span><span class="annot"><a href="ToyPL.Abs.html#PWhile"><span class="hs-identifier hs-type">PWhile</span></a></span><span> </span><span id="local-6989586621679048156"><span class="annot"><span class="annottext">Condition
+</span><a href="#local-6989586621679048156"><span class="hs-identifier hs-var">condition</span></a></span></span><span> </span><span id="local-6989586621679048155"><span class="annot"><span class="annottext">Program
+</span><a href="#local-6989586621679048155"><span class="hs-identifier hs-var">program</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048154"><span class="hs-identifier hs-var">finishLabel</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048153"><span class="hs-identifier hs-var">whileCmd</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-29"></span><span>      </span><span class="hs-keyword">where</span><span>
+</span><span id="line-30"></span><span>        </span><span class="hs-special">(</span><span id="local-6989586621679048154"><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048154"><span class="hs-identifier hs-var">finishLabel</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679048150"><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048150"><span class="hs-identifier hs-var">commands</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Program -&gt; Integer -&gt; (Integer, [Command])
+</span><a href="ToyPL.Trans.html#transProgramToVM"><span class="hs-identifier hs-var">transProgramToVM</span></a></span><span> </span><span class="annot"><span class="annottext">Program
+</span><a href="#local-6989586621679048155"><span class="hs-identifier hs-var">program</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048188"><span class="hs-keyword hs-var">label</span></a></span><span> </span><span class="annot"><span class="annottext">Integer -&gt; Integer -&gt; Integer
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">+</span></span><span> </span><span class="annot"><span class="annottext">Integer
+</span><span class="hs-number">1</span></span><span class="hs-special">)</span><span>
+</span><span id="line-31"></span><span>        </span><span id="local-6989586621679048153"><span class="annot"><span class="annottext">whileCmd :: [Command]
+</span><a href="#local-6989586621679048153"><span class="hs-identifier hs-var hs-var">whileCmd</span></a></span></span><span>                </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Label -&gt; Condition -&gt; Label -&gt; Label -&gt; Command
+</span><a href="ToyPL.Abs.html#VMBranching"><span class="hs-identifier hs-var">VMBranching</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer -&gt; Label
+</span><a href="ToyPL.Abs.html#VMLabel"><span class="hs-identifier hs-var">VMLabel</span></a></span><span> </span><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048188"><span class="hs-keyword hs-var">label</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Condition
+</span><a href="#local-6989586621679048156"><span class="hs-identifier hs-var">condition</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer -&gt; Label
+</span><a href="ToyPL.Abs.html#VMLabel"><span class="hs-identifier hs-var">VMLabel</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048188"><span class="hs-keyword hs-var">label</span></a></span><span> </span><span class="annot"><span class="annottext">Integer -&gt; Integer -&gt; Integer
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">+</span></span><span> </span><span class="annot"><span class="annottext">Integer
+</span><span class="hs-number">1</span></span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer -&gt; Label
+</span><a href="ToyPL.Abs.html#VMLabel"><span class="hs-identifier hs-var">VMLabel</span></a></span><span> </span><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048154"><span class="hs-identifier hs-var">finishLabel</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Command -&gt; [Command] -&gt; [Command]
+forall a. a -&gt; [a] -&gt; [a]
+</span><span class="hs-glyph hs-var">:</span></span><span> </span><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048147"><span class="hs-identifier hs-var">changeLastCommand</span></a></span><span>
+</span><span id="line-32"></span><span>        </span><span id="local-6989586621679048147"><span class="annot"><span class="annottext">changeLastCommand :: [Command]
+</span><a href="#local-6989586621679048147"><span class="hs-identifier hs-var hs-var">changeLastCommand</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">case</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">[Command] -&gt; Command
+forall a. [a] -&gt; a
+</span><span class="hs-identifier hs-var">last</span></span><span> </span><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048150"><span class="hs-identifier hs-var">commands</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-33"></span><span>          </span><span class="annot"><a href="ToyPL.Abs.html#VMAssignment"><span class="hs-identifier hs-type">VMAssignment</span></a></span><span> </span><span id="local-6989586621679048145"><span class="annot"><span class="annottext">Label
+</span><a href="#local-6989586621679048145"><span class="hs-identifier hs-var">label1</span></a></span></span><span> </span><span id="local-6989586621679048144"><span class="annot"><span class="annottext">Variable
+</span><a href="#local-6989586621679048144"><span class="hs-identifier hs-var">variable</span></a></span></span><span> </span><span id="local-6989586621679048143"><span class="annot"><span class="annottext">Exp
+</span><a href="#local-6989586621679048143"><span class="hs-identifier hs-var">exp</span></a></span></span><span> </span><span id="local-6989586621679048142"><span class="annot"><span class="annottext">Label
+</span><a href="#local-6989586621679048142"><span class="hs-identifier hs-var">label2</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048141"><span class="hs-identifier hs-var">whileCommands</span></a></span><span>
+</span><span id="line-34"></span><span>            </span><span class="hs-keyword">where</span><span> </span><span>
+</span><span id="line-35"></span><span>              </span><span id="local-6989586621679048141"><span class="annot"><span class="annottext">whileCommands :: [Command]
+</span><a href="#local-6989586621679048141"><span class="hs-identifier hs-var hs-var">whileCommands</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Int -&gt; [Command] -&gt; [Command]
+forall a. Int -&gt; [a] -&gt; [a]
+</span><span class="hs-identifier hs-var">take</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">(</span><span class="annot"><span class="annottext">[Command] -&gt; Int
+forall (t :: * -&gt; *) a. Foldable t =&gt; t a -&gt; Int
+</span><span class="hs-identifier hs-var">length</span></span><span> </span><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048150"><span class="hs-identifier hs-var">commands</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Int -&gt; Int -&gt; Int
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-glyph hs-var">-</span></span><span> </span><span class="annot"><span class="annottext">Int
+</span><span class="hs-number">1</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">[Command]
+</span><a href="#local-6989586621679048150"><span class="hs-identifier hs-var">commands</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">[Command] -&gt; [Command] -&gt; [Command]
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Label -&gt; Variable -&gt; Exp -&gt; Label -&gt; Command
+</span><a href="ToyPL.Abs.html#VMAssignment"><span class="hs-identifier hs-var">VMAssignment</span></a></span><span> </span><span class="annot"><span class="annottext">Label
+</span><a href="#local-6989586621679048145"><span class="hs-identifier hs-var">label1</span></a></span><span> </span><span class="annot"><span class="annottext">Variable
+</span><a href="#local-6989586621679048144"><span class="hs-identifier hs-var">variable</span></a></span><span> </span><span class="annot"><span class="annottext">Exp
+</span><a href="#local-6989586621679048143"><span class="hs-identifier hs-var">exp</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer -&gt; Label
+</span><a href="ToyPL.Abs.html#VMLabel"><span class="hs-identifier hs-var">VMLabel</span></a></span><span> </span><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048188"><span class="hs-keyword hs-var">label</span></a></span><span class="hs-special">)</span><span class="hs-special">]</span><span>
+</span><span id="line-36"></span><span>
+</span><span id="line-37"></span><span class="hs-comment">-- | transs variable by given identifier into string.</span><span>
+</span><span id="line-38"></span><span class="annot"><a href="ToyPL.Trans.html#transVariable"><span class="hs-identifier hs-type">transVariable</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="ToyPL.Abs.html#Variable"><span class="hs-identifier hs-type">Variable</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-39"></span><span id="transVariable"><span class="annot"><span class="annottext">transVariable :: Variable -&gt; String
+</span><a href="ToyPL.Trans.html#transVariable"><span class="hs-identifier hs-var hs-var">transVariable</span></a></span></span><span> </span><span id="local-6989586621679048132"><span class="annot"><span class="annottext">Variable
+</span><a href="#local-6989586621679048132"><span class="hs-identifier hs-var">x</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">Variable
+</span><a href="#local-6989586621679048132"><span class="hs-identifier hs-var">x</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-40"></span><span>  </span><span class="annot"><a href="ToyPL.Abs.html#Variable"><span class="hs-identifier hs-type">Variable</span></a></span><span> </span><span id="local-6989586621679048130"><span class="annot"><span class="annottext">Ident
+</span><a href="#local-6989586621679048130"><span class="hs-identifier hs-var">ident</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Ident -&gt; String
+</span><a href="ToyPL.Trans.html#transIdent"><span class="hs-identifier hs-var">transIdent</span></a></span><span> </span><span class="annot"><span class="annottext">Ident
+</span><a href="#local-6989586621679048130"><span class="hs-identifier hs-var">ident</span></a></span><span>
+</span><span id="line-41"></span><span>
+</span><span id="line-42"></span><span class="hs-comment">-- | transs identifier into string.</span><span>
+</span><span id="line-43"></span><span class="annot"><a href="ToyPL.Trans.html#transIdent"><span class="hs-identifier hs-type">transIdent</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="ToyPL.Abs.html#Ident"><span class="hs-identifier hs-type">Ident</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-44"></span><span id="transIdent"><span class="annot"><span class="annottext">transIdent :: Ident -&gt; String
+</span><a href="ToyPL.Trans.html#transIdent"><span class="hs-identifier hs-var hs-var">transIdent</span></a></span></span><span> </span><span id="local-6989586621679048128"><span class="annot"><span class="annottext">Ident
+</span><a href="#local-6989586621679048128"><span class="hs-identifier hs-var">x</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">Ident
+</span><a href="#local-6989586621679048128"><span class="hs-identifier hs-var">x</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-45"></span><span>  </span><span class="annot"><a href="ToyPL.Abs.html#Ident"><span class="hs-identifier hs-type">Ident</span></a></span><span> </span><span id="local-6989586621679048126"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679048126"><span class="hs-identifier hs-var">string</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679048126"><span class="hs-identifier hs-var">string</span></a></span><span>
+</span><span id="line-46"></span><span>
+</span><span id="line-47"></span><span class="hs-comment">-- | transs a label into Integer.</span><span>
+</span><span id="line-48"></span><span class="annot"><a href="ToyPL.Trans.html#transLabel"><span class="hs-identifier hs-type">transLabel</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="ToyPL.Abs.html#Label"><span class="hs-identifier hs-type">Label</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Integer</span></span><span>
+</span><span id="line-49"></span><span id="transLabel"><span class="annot"><span class="annottext">transLabel :: Label -&gt; Integer
+</span><a href="ToyPL.Trans.html#transLabel"><span class="hs-identifier hs-var hs-var">transLabel</span></a></span></span><span> </span><span id="local-6989586621679048124"><span class="annot"><span class="annottext">Label
+</span><a href="#local-6989586621679048124"><span class="hs-identifier hs-var">x</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">Label
+</span><a href="#local-6989586621679048124"><span class="hs-identifier hs-var">x</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-50"></span><span>  </span><span class="annot"><a href="ToyPL.Abs.html#VMLabel"><span class="hs-identifier hs-type">VMLabel</span></a></span><span> </span><span id="local-6989586621679048123"><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048123"><span class="hs-identifier hs-var">integer</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679048123"><span class="hs-identifier hs-var">integer</span></a></span></pre></body></html>
