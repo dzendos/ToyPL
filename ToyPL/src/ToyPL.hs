@@ -1,7 +1,6 @@
 module ToyPL where
 
 import           ToyPL.Abs
-import           ToyPL.Lex
 import           ToyPL.Par
 
 import           ToyPL.Eval
@@ -30,7 +29,7 @@ processCommands userCommand state commands = do
 
             where
                 state'   = evalCommand  state cmd
-                position = execPosition state
+                -- position = execPosition state
 
 -- | Gets command from the User and processes it.
 programRunner :: ProgramState -> [Command] -> IO ()
@@ -44,21 +43,21 @@ programRunner state commands
         programRunner state' commands
 
         where
-            position = execPosition state
+            -- position = execPosition state
             showCmd Nothing  = "Nothing"
             showCmd (Just a) = show a
 
-translateInput :: String -> String
-translateInput input = unlines $
-  map commandsToString commands
-  where
-    commands = snd (tplProgram input)
+translateInput :: String -> Either String [String]
+translateInput input =
+  case transProgram <$> pProgram (myLexer input) of
+    Left err            -> Left err
+    Right (_, commands) -> Right (commandsToStrings commands)
 
 runWithInput :: String ->  IO ()
 runWithInput input = do
     let commands = snd (tplProgram input)
 
-    putStrLn $ concat $ commandsToString commands
+    putStrLn $ concat $ commandsToStrings commands
 
     programRunner (initState { finishLabel = toInteger $ length commands }) commands
 
@@ -81,10 +80,11 @@ run = do
     runWithInput fileContent
 
 -- | Tries to translate given program s.
+tplProgram :: String -> (Integer, [Command])
 tplProgram s =
     let Ok e = pProgram (myLexer s)
     in transProgram e
 
 -- | Returns a list of commands that can be printed on the screen.
-commandsToString :: [Command] -> [String]
-commandsToString commands = map (\c -> show c ++ "\n") commands
+commandsToStrings :: [Command] -> [String]
+commandsToStrings commands = map (\c -> show c ++ "\n") commands
