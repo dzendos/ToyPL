@@ -1,0 +1,152 @@
+<!-- Code is adapted from https://github.com/fizruk/simple-topes/blob/main/try-simple-topes/index.html -->
+<html>
+  <head>
+    <title>ToyPL online!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/mode/simple.min.js"></script>
+
+    <!-- Load local GHCJS application if possible -->
+    <script src="result/bin/ToyPL-online.jsexe/all.js"></script>
+    <!-- Otherwise load the one hosted on GitHub Pages -->
+    <script>window.h$mainLoop || document.write('<script src="https://fizruk.github.io/ToyPL/result/bin/ToyPL-online.jsexe/all.js"><\/script>')</script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/codemirror.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/theme/solarized.min.css">
+    <link rel="stylesheet" href="https://codemirror.net/5/theme/gruvbox-dark.css">
+    <style>
+      section { width: 100%; }
+      body { margin: 0; background-color: #282828; }
+      .row { display: flex; justify-content:space-evenly; margin: 0; padding: 0; width: 100%; }
+      .column { margin-top: 0; margin-bottom: 0; height: 100vh; width: 49%;  }
+      .CodeMirror { height: auto; font-family: Inconsolata, monospace; }
+
+      /* CSS for response button from https://getcssscan.com/css-buttons-examples (button 61) */
+      #__response__ button {
+        align-items: center;
+        appearance: none;
+        border-radius: 4px;
+        border-style: none;
+        box-shadow: rgba(0, 0, 0, .2) 0 3px 1px -2px,rgba(0, 0, 0, .14) 0 2px 2px 0,rgba(0, 0, 0, .12) 0 1px 5px 0;
+        box-sizing: border-box;
+        color: #fff;
+        cursor: pointer;
+        display: inline-flex;
+        font-family: Roboto,sans-serif;
+        font-size: .875rem;
+        font-weight: 500;
+        height: 36px;
+        justify-content: center;
+        letter-spacing: .0892857em;
+        line-height: normal;
+        min-width: 64px;
+        outline: none;
+        overflow: visible;
+        padding: 0 16px;
+        position: relative;
+        text-align: center;
+        text-decoration: none;
+        text-transform: uppercase;
+        transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1);
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: middle;
+        will-change: transform,opacity;
+      }
+
+      #__response__ button:hover {
+        box-shadow: rgba(0, 0, 0, .2) 0 2px 4px -1px, rgba(0, 0, 0, .14) 0 4px 5px 0, rgba(0, 0, 0, .12) 0 1px 10px 0;
+      }
+
+      #__response__ button:disabled {
+        background-color: rgba(0, 0, 0, .12);
+        box-shadow: rgba(0, 0, 0, .2) 0 0 0 0, rgba(0, 0, 0, .14) 0 0 0 0, rgba(0, 0, 0, .12) 0 0 0 0;
+        color: rgba(0, 0, 0, .37);
+        cursor: default;
+        pointer-events: none;
+      }
+
+      #__response__ button:not(:disabled) {
+        background-color: #6200ee;
+      }
+
+      #__response__ button:focus {
+        box-shadow: rgba(0, 0, 0, .2) 0 2px 4px -1px, rgba(0, 0, 0, .14) 0 4px 5px 0, rgba(0, 0, 0, .12) 0 1px 10px 0;
+      }
+
+      #__response__ button:active {
+        box-shadow: rgba(0, 0, 0, .2) 0 5px 5px -3px, rgba(0, 0, 0, .14) 0 8px 10px 1px, rgba(0, 0, 0, .12) 0 3px 14px 2px;
+        background: #A46BF5;
+      }
+
+      #__response__ { background-color: #202028; color: #eee8d5; }
+      #__response__ pre { font-family: Inconsolata, monospace; }
+    </style>
+  </head>
+  <body class="cm-c-gruvbox-dark">
+    <div class="row">
+      <div class="column" id="__codemirror__">
+      </div>
+      <div class="column" id="__response__">
+        <div id="__app__" style="margin: 20px"></div>
+      </div>
+    </div>
+
+    <script>
+      // adapted from https://stackoverflow.com/a/28828681/442535
+      function getText(url){
+          // read text from URL location
+          var request = new XMLHttpRequest();
+          request.open('GET', url, true);
+          request.send(null);
+          request.onreadystatechange = function () {
+              if (request.readyState === 4 && request.status === 200) {
+                  var type = request.getResponseHeader('Content-Type');
+                  if (type.indexOf("text") !== 1) {
+                      return request.responseText;
+                  }
+              }
+          }
+      }
+
+      /* extract query parameters from the URL */
+      const params = new URLSearchParams(window.location.search);
+
+      /* set up CodeMirror in the __textarea__ div */
+      var frame = document.getElementById("__codemirror__");
+      var myCodeMirror = CodeMirror(frame, {
+        lineNumbers: true,
+        value: "Loading...",
+        // mode:  "ToyPL", // FIXME: implement this mode
+        viewportMargin: Infinity,
+        indentUnit: 2,
+        smartIndent: true,
+        tabSize: 2,
+        theme: "gruvbox-dark"
+      });
+
+      snippet = "";
+
+      /* use default snippet if one is not set in the query parameters */
+      if (params.has("snippet")) {
+        snippet = decodeURIComponent(params.get("snippet"));
+      } else if (params.has("snippet_url")) {
+        snippet_url = decodeURIComponent(params.get("snippet_url"));
+        fetch(snippet_url).then(function (response) {
+          // The API call was successful!
+          response.text().then(function(txt) {
+            snippet = txt;
+            myCodeMirror.setValue(snippet);
+          });
+        }).catch(function (err) {
+          // There was an error
+          console.warn('Something went wrong.', err);
+        });
+      }
+
+      myCodeMirror.setValue(snippet);
+    </script>
+  </body>
+</html>
