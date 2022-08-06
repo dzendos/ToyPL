@@ -1,0 +1,13 @@
+name:                ToyPL-online
+version:             0.1.0
+synopsis:            A serverless online version of ToyPL interpreter
+category:            Web
+build-type:          Simple
+cabal-version:       >=1.10
+
+executable ToyPL-online
+  main-is:             Main.hs
+  ghcjs-options:
+    -dedupe
+  build-depends:       base, miso, ToyPL
+  default-language:    Haskell2010
